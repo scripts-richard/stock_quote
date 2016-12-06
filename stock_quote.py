@@ -106,3 +106,5 @@ def main():
     sender, to = get_emails()
     text, html = format_text(changes)
     gmail_helper.email(sender, to, 'Stock Quotes', text, html)
+
+main()
