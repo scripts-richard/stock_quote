@@ -13,7 +13,8 @@ import locale
 
 import gmail_helper
 
-save_file = './stock_quote.csv'
+save_file = 'stock_quote.csv'
+emails_file = 'emails.txt'
 
 def get_existing_info():
     # Requires an existing file with the following info for eachs stock
@@ -45,17 +46,6 @@ def write_changes(stocks):
         writer = csv.writer(f)
         writer.writerows(stocks)
     return
-
-def get_emails():
-    # Get info from files
-    # TODO: Move function to gmail_helper and hand filename
-    with open('emails.txt') as f:
-        emails = f.read().splitlines()
-    for line in emails:
-        if line[0] == '#':
-            emails.remove(line)
-    sender = emails.pop(0)
-    return sender, emails
 
 def format_text(changes):
     # Prepare plain text and html
@@ -103,8 +93,8 @@ def main():
     stocks = get_existing_info()
     changes, stocks = get_changes(stocks)
     write_changes(stocks)
-    sender, to = get_emails()
     text, html = format_text(changes)
+    sender, to = gmail_helper.get_emails(emails_file)
     gmail_helper.email(sender, to, 'Stock Quotes', text, html)
 
 main()
