@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #-----------------------------------------------------------------------------------
 # stock_quote.py
-# v1.0
+# v2.0
 # by Richard Mills
 # Fetches select stock prices, compare and save differences, emails changes
 #-----------------------------------------------------------------------------------
@@ -16,6 +16,7 @@ import gmail_helper
 save_file = './stock_quote.csv'
 
 def get_existing_info():
+    # Requires an existing file with the following info for eachs stock
     # ticker -- quantity -- previous price -- previous value
     stocks = []
     with open(save_file, newline = '') as f:
@@ -25,6 +26,7 @@ def get_existing_info():
     return stocks
 
 def get_changes(stocks):
+    # Get current stock info and calculate changes
     changes = []
     updated_stocks = []
     for stock in stocks:
@@ -38,12 +40,15 @@ def get_changes(stocks):
     return changes, updated_stocks
 
 def write_changes(stocks):
+    # Overwrite existing info with new info
     with open(save_file, 'w', newline = '') as f:
         writer = csv.writer(f)
         writer.writerows(stocks)
     return
 
 def get_emails():
+    # Get info from files
+    # TODO: Move function to gmail_helper and hand filename
     with open('emails.txt') as f:
         emails = f.read().splitlines()
     for line in emails:
@@ -53,6 +58,7 @@ def get_emails():
     return sender, emails
 
 def format_text(changes):
+    # Prepare plain text and html
     time = time.strfttime('%Y-%m-%d')
 
     text = time + '\n\n'
