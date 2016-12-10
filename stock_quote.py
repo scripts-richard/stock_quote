@@ -97,4 +97,5 @@ def main():
     sender, to = gmail_helper.get_emails(emails_file)
     gmail_helper.email(sender, to, 'Stock Quotes', text, html)
 
-main()
+if __name__ == "__main__":
+    main()
