@@ -54,7 +54,7 @@ def format_text(changes):
     text = current_time + '\n\n'
     change_html = ''
 
-    locale.setlocale(locale.LC_NUMERIC, 'English')
+    locale.setlocale(locale.LC_NUMERIC, 'en_CA.UTF-8')
 
     for change in changes:
         dollar_view = locale.format('%.2f', change[2], True)
