@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -------------------------------------------------------------------------------
 # stock_quote.py
-# v2.0
 # by Richard Mills
 # Fetches select stock prices, compare and save differences, emails changes
 # -------------------------------------------------------------------------------
@@ -10,18 +9,20 @@ from yahoo_finance import Share
 import csv
 import time
 import locale
+import os
 
 import gmail_helper
 
-save_file = 'stock_quote.csv'
-emails_file = 'emails.txt'
+basedir = os.path.dirname(os.path.realpath(__file__))
+save_file = os.path.join(basedir, 'stock_quote.csv')
+emails_file = os.path.join(basedir, 'emails.txt')
 
 
 def get_existing_info():
     # Requires an existing file with the following info for eachs stock
     # ticker -- quantity -- previous price -- previous value
     stocks = []
-    with open(save_file, newline='') as f:
+    with open(save_file, 'r', newline='') as f:
         reader = csv.reader(f)
         for row in reader:
             stocks.append(row)
